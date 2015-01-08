@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+
+    <!-- Activity themes -->
+    <style name="Theme.Base" parent="android:Theme.Material.Light.DarkActionBar">
+    	<!-- Override the app bar color -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <!-- Override the app status bar color -->
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <!-- Override the color of UI controls -->
+        <item name="android:colorAccent">@color/accent</item>
+  	</style>
+
+</resources>

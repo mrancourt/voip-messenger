@@ -9,7 +9,7 @@ using Android.OS;
 
 namespace messenger
 {
-	[Activity (Label = "messenger", MainLauncher = true, Icon = "@drawable/icon")]
+	[Activity (Label = "@string/MainActivity.label", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Theme.Base")]
 	public class MainActivity : Activity
 	{
 

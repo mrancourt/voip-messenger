@@ -13,7 +13,7 @@ using Android.Widget;
 
 namespace messenger
 {
-	[Activity (Label = "ConversationActivity")]			
+	[Activity (Label = "@string/ConversationActivity.label", Theme = "@style/Theme.Base")]			
 	public class ConversationActivity : Activity
 	{
 		protected override void OnCreate (Bundle bundle)

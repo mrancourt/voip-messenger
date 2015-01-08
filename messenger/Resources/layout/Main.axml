@@ -4,12 +4,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <Button
-        android:text="New Conversation"
+        android:text="@string/NewConversationActivity.label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnNewConversation" />
+        android:id="@+id/btnNewConversation"
+        android:layout_marginTop="16.4dp" />
     <Button
-        android:text="Existing Conversation"
+        android:text="@string/ConversationActivity.label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnExistingConversation" />
