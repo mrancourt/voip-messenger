@@ -12,7 +12,6 @@ namespace messenger
 	[Activity (Label = "@string/MainActivity.label", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Theme.Base")]
 	public class MainActivity : Activity
 	{
-
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
@@ -35,7 +34,6 @@ namespace messenger
 				StartActivity(intent);
 			};
 		}
-
 	}
 }
 

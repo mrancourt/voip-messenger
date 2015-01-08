@@ -21,8 +21,11 @@ namespace messenger
 	{
 		protected override void OnCreate (Bundle bundle)
 		{
-	
 			base.OnCreate (bundle);
+
+			// Activate Back button in Action Bar
+			ActionBar.SetHomeButtonEnabled(true);
+			ActionBar.SetDisplayHomeAsUpEnabled(true);
 
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Conversation);
@@ -36,8 +39,19 @@ namespace messenger
 
 			TextView txtContactInfo = FindViewById<TextView> (Resource.Id.txtContactInfo);
 			txtContactInfo.Text = contact.ToString();
+		}
 
+		public override bool OnOptionsItemSelected(IMenuItem item)
+		{
+			switch (item.ItemId)
+			{
+			case Android.Resource.Id.Home:
+				Finish();
+				return true;
 
+			default:
+				return base.OnOptionsItemSelected(item);
+			}
 		}
 	}
 }

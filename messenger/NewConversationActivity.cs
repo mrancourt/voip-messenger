@@ -19,6 +19,9 @@ namespace messenger
 		{
 			base.OnCreate (bundle);
 
+			ActionBar.SetHomeButtonEnabled(true);
+			ActionBar.SetDisplayHomeAsUpEnabled(true);
+
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.NewConversation);
 
@@ -31,6 +34,19 @@ namespace messenger
 				intent.PutExtra ("Id", e.Id);
 				StartActivity(intent);
 			};
+		}
+
+		public override bool OnOptionsItemSelected(IMenuItem item)
+		{
+			switch (item.ItemId)
+			{
+			case Android.Resource.Id.Home:
+				Finish();
+				return true;
+
+			default:
+				return base.OnOptionsItemSelected(item);
+			}
 		}
 	}
 }
