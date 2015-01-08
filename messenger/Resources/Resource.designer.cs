@@ -67,7 +67,10 @@ namespace messenger
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			public const int contactImage = 2130837504;
+			
+			// aapt resource value: 0x7f020001
+			public const int Icon = 2130837505;
 			
 			static Drawable()
 			{
@@ -82,11 +85,20 @@ namespace messenger
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070001
-			public const int btnExistingConversation = 2131165185;
-			
 			// aapt resource value: 0x7f070000
-			public const int btnNewConversation = 2131165184;
+			public const int ContactImage = 2131165184;
+			
+			// aapt resource value: 0x7f070001
+			public const int ContactName = 2131165185;
+			
+			// aapt resource value: 0x7f070004
+			public const int ContactsListView = 2131165188;
+			
+			// aapt resource value: 0x7f070003
+			public const int btnExistingConversation = 2131165187;
+			
+			// aapt resource value: 0x7f070002
+			public const int btnNewConversation = 2131165186;
 			
 			static Id()
 			{
@@ -102,7 +114,13 @@ namespace messenger
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int ContactListItem = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int Main = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int NewConversation = 2130903042;
 			
 			static Layout()
 			{

@@ -20,7 +20,13 @@ namespace messenger
 		{
 			base.OnCreate (bundle);
 
-			// Create your application here
+			// Set our view from the "main" layout resource
+			SetContentView (Resource.Layout.NewConversation);
+
+			var contactAdapter = new ContactAdapter (this);
+			var contentListView = FindViewById<ListView> (Resource.Id.ContactsListView);
+			contentListView.Adapter = contactAdapter;
+		
 		}
 	}
 }
