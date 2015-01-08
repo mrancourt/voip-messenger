@@ -42,6 +42,12 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.21.0.3.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.AppCompat">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.21.0.3.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -51,11 +57,13 @@
     <Compile Include="ConversationActivity.cs" />
     <Compile Include="ContactAdapter.cs" />
     <Compile Include="Contact.cs" />
+    <Compile Include="FloatingActionButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
@@ -67,9 +75,24 @@
     <AndroidResource Include="Resources\layout\ContactListItem.axml" />
     <AndroidResource Include="Resources\drawable\contactImage.png" />
     <AndroidResource Include="Resources\layout\Conversation.axml" />
+    <AndroidResource Include="Resources\drawable\fabBackground.xml" />
+    <AndroidResource Include="Resources\values\dimens.xml" />
+    <AndroidResource Include="Resources\drawable\ic_add.png" />
+    <AndroidResource Include="Resources\animator\fab_anim.xml" />
+    <AndroidResource Include="Resources\drawable\fabIconAdd.xml" />
+    <AndroidResource Include="Resources\drawable\fabIconSend.xml" />
+    <AndroidResource Include="Resources\drawable\ic_send.png" />
+    <AndroidResource Include="Resources\drawable\roundedEditText.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Resources\values-v21\" />
+    <Folder Include="Resources\animator\" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="xamandroidsupportv7appcompat">
+      <Version>21.0.3.0</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
 </Project>

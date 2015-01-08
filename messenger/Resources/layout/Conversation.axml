@@ -9,4 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtContactInfo" />
+    <FrameLayout
+        android:id="@+id/sample_content_fragment"
+        android:layout_weight="2"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <messenger.FloatingActionButton
+            android:id="@+id/btnNewConversation"
+            android:layout_width="@dimen/fab_size_small"
+            android:layout_height="@dimen/fab_size_small"
+            android:elevation="@dimen/fab_elevation"
+            android:background="@drawable/fabBackground"
+            android:stateListAnimator="@animator/fab_anim"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="24dp">
+            <ImageView
+                android:layout_width="@dimen/fab_icon_size"
+                android:layout_height="@dimen/fab_icon_size"
+                android:src="@drawable/fabIconSend"
+                android:layout_gravity="center"
+                android:duplicateParentState="true" />
+        </messenger.FloatingActionButton>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dip"
+            android:background="@drawable/roundedEditText"
+            android:layout_gravity="bottom"
+            android:maxLines="4"
+            android:layout_marginRight="70dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="39.9dp"
+            android:id="@+id/messageBox" />
+    </FrameLayout>
 </LinearLayout>

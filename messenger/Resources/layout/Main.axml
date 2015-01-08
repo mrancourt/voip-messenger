@@ -4,14 +4,32 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <Button
-        android:text="@string/NewConversationActivity.label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnNewConversation"
-        android:layout_marginTop="16.4dp" />
-    <Button
         android:text="@string/ConversationActivity.label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnExistingConversation" />
+    <FrameLayout
+        android:id="@+id/sample_content_fragment"
+        android:layout_weight="2"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <messenger.FloatingActionButton
+            android:id="@+id/btnNewConversation"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:elevation="@dimen/fab_elevation"
+            android:background="@drawable/fabBackground"
+            android:stateListAnimator="@animator/fab_anim"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp">
+            <ImageView
+                android:layout_width="@dimen/fab_icon_size"
+                android:layout_height="@dimen/fab_icon_size"
+                android:src="@drawable/fabIconAdd"
+                android:layout_gravity="center"
+                android:duplicateParentState="true" />
+        </messenger.FloatingActionButton>
+    </FrameLayout>
 </LinearLayout>

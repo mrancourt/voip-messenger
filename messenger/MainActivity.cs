@@ -21,10 +21,11 @@ namespace messenger
 
 			// Get our button from the layout resource,
 			// and attach an event to it
-			Button btnNewConversation = FindViewById<Button> (Resource.Id.btnNewConversation);
 			Button btnExistingConversation = FindViewById<Button> (Resource.Id.btnExistingConversation);
+			FloatingActionButton btnNewConversation = FindViewById<FloatingActionButton> (Resource.Id.btnNewConversation);
 
-			btnNewConversation.Click += (sender, e) => {
+			btnNewConversation.Click += (sender, e) =>
+			{
 				var intent = new Intent(this, typeof(NewConversationActivity));
 				StartActivity(intent);
 			};

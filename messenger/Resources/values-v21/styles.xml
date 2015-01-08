@@ -7,8 +7,6 @@
         <item name="android:colorPrimary">@color/primary</item>
         <!-- Override the app status bar color -->
         <item name="android:statusBarColor">@color/primary_dark</item>
-        <!-- Override the color of UI controls -->
-        <item name="android:colorAccent">@color/accent</item>
   	</style>
 
 </resources>
