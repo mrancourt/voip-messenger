@@ -1295,9 +1295,6 @@ namespace messenger
 			// aapt resource value: 0x7f090025
 			public const int list_item = 2131296293;
 			
-			// aapt resource value: 0x7f090044
-			public const int messageBox = 2131296324;
-			
 			// aapt resource value: 0x7f090015
 			public const int middle = 2131296277;
 			
@@ -1378,6 +1375,9 @@ namespace messenger
 			
 			// aapt resource value: 0x7f090041
 			public const int txtContactInfo = 2131296321;
+			
+			// aapt resource value: 0x7f090044
+			public const int txtMessageBox = 2131296324;
 			
 			// aapt resource value: 0x7f090008
 			public const int up = 2131296264;

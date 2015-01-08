@@ -42,6 +42,6 @@
             android:layout_marginRight="70dp"
             android:layout_marginBottom="18dp"
             android:layout_marginLeft="39.9dp"
-            android:id="@+id/messageBox" />
+            android:id="@+id/txtMessageBox" />
     </FrameLayout>
 </LinearLayout>
