@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +25,12 @@ namespace messenger
 			var contactAdapter = new ContactAdapter (this);
 			var contentListView = FindViewById<ListView> (Resource.Id.ContactsListView);
 			contentListView.Adapter = contactAdapter;
-		
+
+			contentListView.ItemClick += (sender, e) => {
+				var intent = new Intent(this, typeof(ConversationActivity));
+				intent.PutExtra ("Id", e.Id);
+				StartActivity(intent);
+			};
 		}
 	}
 }

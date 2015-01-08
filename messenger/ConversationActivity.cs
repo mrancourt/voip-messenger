@@ -11,6 +11,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
+using Android.Database;
+using Android.Provider;
+
 namespace messenger
 {
 	[Activity (Label = "@string/ConversationActivity.label", Theme = "@style/Theme.Base")]			
@@ -18,9 +21,16 @@ namespace messenger
 	{
 		protected override void OnCreate (Bundle bundle)
 		{
+	
 			base.OnCreate (bundle);
 
-			// Create your application here
+			// Load contact infos
+			long contactId = Intent.GetLongExtra("Id", -1);
+			Contact contact = new Contact ().GetContactById(contactId, this);
+
+			// Set ActionBar to contact name
+			this.Title = contact.DisplayName;
+
 		}
 	}
 }
