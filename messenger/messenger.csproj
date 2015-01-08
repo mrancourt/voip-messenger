@@ -58,6 +58,8 @@
     <Compile Include="ContactAdapter.cs" />
     <Compile Include="Contact.cs" />
     <Compile Include="FloatingActionButton.cs" />
+    <Compile Include="smsHandler.cs" />
+    <Compile Include="Extentions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

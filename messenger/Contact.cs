@@ -12,7 +12,8 @@ namespace messenger
 		public long Id { get; set; }
 		public string DisplayName { get; set; }
 		public string PhotoThumbnailId { get; set; }
-		public string PhoneNumber { get; set; }
+		public string Number { get; set; }
+		public string NormalizedNumber { get; set; }
 
 		public Contact GetContactById(long Id, Activity activity) {
 			Contact contact = new Contact() ;
@@ -23,7 +24,9 @@ namespace messenger
 				ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId,
 				ContactsContract.Contacts.InterfaceConsts.DisplayName,
 				ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri,
-				ContactsContract.CommonDataKinds.Phone.Number
+				ContactsContract.CommonDataKinds.Phone.Number,
+				ContactsContract.CommonDataKinds.Phone.NormalizedNumber
+
 			};
 
 			// Build query statement
@@ -41,7 +44,8 @@ namespace messenger
 					Id = cursor.GetLong (cursor.GetColumnIndex (projection [0])),
 					DisplayName = cursor.GetString (cursor.GetColumnIndex (projection [1])),
 					PhotoThumbnailId = cursor.GetString (cursor.GetColumnIndex (projection [2])),
-					PhoneNumber = cursor.GetString (cursor.GetColumnIndex (projection [3])),
+					Number = cursor.GetString (cursor.GetColumnIndex (projection [3])),
+					NormalizedNumber = cursor.GetString (cursor.GetColumnIndex (projection [4]))
 				};
 			} 
 
@@ -52,7 +56,7 @@ namespace messenger
 			string contactInfo = 
 				Id + Environment.NewLine + 
 				DisplayName + Environment.NewLine + 
-				PhoneNumber + Environment.NewLine + 
+				Number + " => " + NormalizedNumber + " " + Environment.NewLine +
 				PhotoThumbnailId ;
 
 			return contactInfo;

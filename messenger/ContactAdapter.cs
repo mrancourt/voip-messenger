@@ -7,6 +7,8 @@ using Android.Content;
 using Android.Provider;
 using System.Collections.Generic;
 
+// Refactoriser permettre de passer des parametres a la fonction fillcontacts. Ex pour recuperer un seul contact.
+
 namespace messenger
 {
 	public class ContactAdapter : BaseAdapter
@@ -21,7 +23,7 @@ namespace messenger
 			FillContacts ();
 		}
 
-		void FillContacts () 
+		void FillContacts ()
 		{
 			//var uri = ContactsContract.Contacts.ContentUri;
 			var uri = ContactsContract.CommonDataKinds.Phone.ContentUri;
@@ -30,13 +32,16 @@ namespace messenger
 				ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId,
 				ContactsContract.Contacts.InterfaceConsts.DisplayName,
 				ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri,
-				ContactsContract.CommonDataKinds.Phone.Number
+				ContactsContract.CommonDataKinds.Phone.Number,
+				ContactsContract.CommonDataKinds.Phone.NormalizedNumber
 			};
 
 			// Build query statement
 			string selection = ContactsContract.Contacts.InterfaceConsts.HasPhoneNumber + "= ?";
 			string[] selectionArgs = { "1" };
-			string order = ContactsContract.Contacts.InterfaceConsts.Starred + " DESC";
+			//string order = ContactsContract.Contacts.InterfaceConsts.Starred + " DESC";
+			string order = ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + " DESC";
+
 
 			// Load query results
 			var loader = new CursorLoader (_activity, uri, projection, selection, selectionArgs, order);
@@ -46,13 +51,16 @@ namespace messenger
 
 			if (cursor.MoveToFirst ()) 
 			{
+
 				do {
 					_contactList.Add(new Contact{
 						Id = cursor.GetLong(cursor.GetColumnIndex(projection[0])),
 						DisplayName = cursor.GetString(cursor.GetColumnIndex(projection[1])),
 						PhotoThumbnailId = cursor.GetString(cursor.GetColumnIndex(projection[2])),
-						PhoneNumber = cursor.GetString(cursor.GetColumnIndex(projection[3]))
+						Number = cursor.GetString(cursor.GetColumnIndex(projection[3])),
+						NormalizedNumber = cursor.GetString(cursor.GetColumnIndex(projection[4]))
 					});
+
 				} while (cursor.MoveToNext ());
 			}
 		}
