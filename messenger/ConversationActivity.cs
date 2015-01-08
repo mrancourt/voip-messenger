@@ -24,12 +24,19 @@ namespace messenger
 	
 			base.OnCreate (bundle);
 
+			// Set our view from the "main" layout resource
+			SetContentView (Resource.Layout.Conversation);
+
 			// Load contact infos
 			long contactId = Intent.GetLongExtra("Id", -1);
 			Contact contact = new Contact ().GetContactById(contactId, this);
 
 			// Set ActionBar to contact name
 			this.Title = contact.DisplayName;
+
+			TextView txtContactInfo = FindViewById<TextView> (Resource.Id.txtContactInfo);
+			txtContactInfo.Text = contact.ToString();
+
 
 		}
 	}

@@ -66,6 +66,7 @@
     <AndroidResource Include="Resources\layout\NewConversation.axml" />
     <AndroidResource Include="Resources\layout\ContactListItem.axml" />
     <AndroidResource Include="Resources\drawable\contactImage.png" />
+    <AndroidResource Include="Resources\layout\Conversation.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>

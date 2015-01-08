@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-
 using Android.App;
 using Android.Content;
-//using Android.OS;
-//using Android.Views;
-//using Android.Widget;
-
 using Android.Database;
 using Android.Provider;
+using System.Collections.Generic;
 
 namespace messenger
 {
@@ -19,25 +12,22 @@ namespace messenger
 		public long Id { get; set; }
 		public string DisplayName { get; set; }
 		public string PhotoThumbnailId { get; set; }
-
-		public Contact ()
-		{
-
-		}
+		public string PhoneNumber { get; set; }
 
 		public Contact GetContactById(long Id, Activity activity) {
 			Contact contact = new Contact() ;
 
-			var uri = ContactsContract.Contacts.ContentUri;
+			var uri = ContactsContract.CommonDataKinds.Phone.ContentUri;
 
 			string[] projection = {
-				ContactsContract.Contacts.InterfaceConsts.Id,
+				ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId,
 				ContactsContract.Contacts.InterfaceConsts.DisplayName,
-				ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri
+				ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri,
+				ContactsContract.CommonDataKinds.Phone.Number
 			};
 
 			// Build query statement
-			string selection = ContactsContract.Contacts.InterfaceConsts.Id + "= ?";
+			string selection = ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + "= ?";
 			string[] selectionArgs = { Id.ToString() };
 
 			// Load query results
@@ -51,10 +41,21 @@ namespace messenger
 					Id = cursor.GetLong (cursor.GetColumnIndex (projection [0])),
 					DisplayName = cursor.GetString (cursor.GetColumnIndex (projection [1])),
 					PhotoThumbnailId = cursor.GetString (cursor.GetColumnIndex (projection [2])),
+					PhoneNumber = cursor.GetString (cursor.GetColumnIndex (projection [3])),
 				};
 			} 
 
 			return contact;
+		}
+
+		public override string ToString() {
+			string contactInfo = 
+				Id + Environment.NewLine + 
+				DisplayName + Environment.NewLine + 
+				PhoneNumber + Environment.NewLine + 
+				PhotoThumbnailId ;
+
+			return contactInfo;
 		}
 
 	}

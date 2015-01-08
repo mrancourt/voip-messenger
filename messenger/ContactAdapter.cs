@@ -23,12 +23,14 @@ namespace messenger
 
 		void FillContacts () 
 		{
-			var uri = ContactsContract.Contacts.ContentUri;
+			//var uri = ContactsContract.Contacts.ContentUri;
+			var uri = ContactsContract.CommonDataKinds.Phone.ContentUri;
 
 			string[] projection = {
-				ContactsContract.Contacts.InterfaceConsts.Id,
+				ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId,
 				ContactsContract.Contacts.InterfaceConsts.DisplayName,
-				ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri
+				ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri,
+				ContactsContract.CommonDataKinds.Phone.Number
 			};
 
 			// Build query statement
@@ -49,6 +51,7 @@ namespace messenger
 						Id = cursor.GetLong(cursor.GetColumnIndex(projection[0])),
 						DisplayName = cursor.GetString(cursor.GetColumnIndex(projection[1])),
 						PhotoThumbnailId = cursor.GetString(cursor.GetColumnIndex(projection[2])),
+						PhoneNumber = cursor.GetString(cursor.GetColumnIndex(projection[3]))
 					});
 				} while (cursor.MoveToNext ());
 			}
@@ -75,6 +78,8 @@ namespace messenger
 			var contactName = view.FindViewById<TextView> (Resource.Id.ContactName);
 			var contactImage = view.FindViewById<ImageView> (Resource.Id.ContactImage);
 			contactName.Text = _contactList [position].DisplayName;
+
+			contactName.Text = _contactList [position].ToString();
 
 			if (_contactList [position].PhotoThumbnailId == null) {
 				contactImage = view.FindViewById<ImageView> (Resource.Id.ContactImage);

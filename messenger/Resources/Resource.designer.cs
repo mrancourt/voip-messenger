@@ -91,14 +91,17 @@ namespace messenger
 			// aapt resource value: 0x7f070001
 			public const int ContactName = 2131165185;
 			
+			// aapt resource value: 0x7f070005
+			public const int ContactsListView = 2131165189;
+			
 			// aapt resource value: 0x7f070004
-			public const int ContactsListView = 2131165188;
+			public const int btnExistingConversation = 2131165188;
 			
 			// aapt resource value: 0x7f070003
-			public const int btnExistingConversation = 2131165187;
+			public const int btnNewConversation = 2131165187;
 			
 			// aapt resource value: 0x7f070002
-			public const int btnNewConversation = 2131165186;
+			public const int txtContactInfo = 2131165186;
 			
 			static Id()
 			{
@@ -117,10 +120,13 @@ namespace messenger
 			public const int ContactListItem = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int Main = 2130903041;
+			public const int Conversation = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int NewConversation = 2130903042;
+			public const int Main = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int NewConversation = 2130903043;
 			
 			static Layout()
 			{
