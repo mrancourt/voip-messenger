@@ -1184,8 +1184,8 @@ namespace messenger
 			// aapt resource value: 0x7f090040
 			public const int ContactName = 2131296320;
 			
-			// aapt resource value: 0x7f090046
-			public const int ContactsListView = 2131296326;
+			// aapt resource value: 0x7f090047
+			public const int ContactsListView = 2131296327;
 			
 			// aapt resource value: 0x7f090031
 			public const int action_bar = 2131296305;
@@ -1238,8 +1238,11 @@ namespace messenger
 			// aapt resource value: 0x7f090045
 			public const int btnExistingConversation = 2131296325;
 			
+			// aapt resource value: 0x7f090046
+			public const int btnNewConversation = 2131296326;
+			
 			// aapt resource value: 0x7f090043
-			public const int btnNewConversation = 2131296323;
+			public const int btnSendMessage = 2131296323;
 			
 			// aapt resource value: 0x7f090029
 			public const int checkbox = 2131296297;

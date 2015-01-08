@@ -12,7 +12,7 @@ using Android.Views;
 using Android.Widget;
 
 using Android.Database;
-using Android.Provider;
+
 
 namespace messenger
 {
@@ -39,6 +39,13 @@ namespace messenger
 
 			TextView txtContactInfo = FindViewById<TextView> (Resource.Id.txtContactInfo);
 			txtContactInfo.Text = contact.ToString();
+
+			FloatingActionButton sendButton = FindViewById<FloatingActionButton> (Resource.Id.btnSendMessage);
+			sendButton.Click += (sender, e) => {
+				SMSHandler smsHandler = new SMSHandler();
+				smsHandler.sendSMS();
+			};
+
 		}
 
 		public override bool OnOptionsItemSelected(IMenuItem item)
