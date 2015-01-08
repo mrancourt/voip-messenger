@@ -16,7 +16,7 @@ using Android.Provider;
 
 namespace messenger
 {
-	[Activity (Label = "@string/ConversationActivity.label", Theme = "@style/Theme.Base")]			
+	[Activity (WindowSoftInputMode = SoftInput.AdjustResize, Label = "@string/ConversationActivity.label", Theme = "@style/Theme.Base")]			
 	public class ConversationActivity : Activity
 	{
 		protected override void OnCreate (Bundle bundle)
