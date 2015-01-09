@@ -39,7 +39,7 @@ namespace messenger
 
 			// Get database instance
 			Database = Manager.SharedInstance.GetDatabase(Tag.ToLower());
-			//Database.Delete ();
+			Database.Delete ();
 
 			// Get previous messages
 			Query = Message.GetQuery(Database);

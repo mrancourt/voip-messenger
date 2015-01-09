@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="@+id/mainLinearLayout"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <FrameLayout
+        android:id="@+id/sample_content_fragment"
+        android:layout_weight="2"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <messenger.FloatingActionButton
+            android:id="@+id/btnSendMessage"
+            android:layout_width="@dimen/fab_size_small"
+            android:layout_height="@dimen/fab_size_small"
+            android:elevation="@dimen/fab_elevation"
+            android:background="@drawable/fabBackground"
+            android:stateListAnimator="@animator/fab_anim"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="24dp">
+            <ImageView
+                android:layout_width="@dimen/fab_icon_size"
+                android:layout_height="@dimen/fab_icon_size"
+                android:src="@drawable/fabIconSend"
+                android:layout_gravity="center"
+                android:duplicateParentState="true" />
+        </messenger.FloatingActionButton>
+        <EditText
+            android:id="@+id/txtMessageBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dip"
+            android:background="@drawable/roundedEditText"
+            android:layout_gravity="bottom"
+            android:maxLines="4"
+            android:layout_marginRight="70dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="39.9dp"
+            android:imeOptions="actionSend|flagNoEnterAction" />
+        <ListView
+            android:id="@+id/listViewMessages"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:elevation="8dp"
+            android:stackFromBottom="false"
+            android:transcriptMode="alwaysScroll"
+            android:layout_marginBottom="80dp" />
+    </FrameLayout>
+</LinearLayout>
