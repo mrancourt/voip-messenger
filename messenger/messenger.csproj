@@ -83,7 +83,6 @@
     <Compile Include="Contact.cs" />
     <Compile Include="FloatingActionButton.cs" />
     <Compile Include="Extentions.cs" />
-    <Compile Include="DisplayActionSheet.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="MessageHandler.cs" />
     <Compile Include="ConversationListViewAdapter.cs" />
