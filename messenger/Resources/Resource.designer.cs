@@ -26,6 +26,7 @@ namespace messenger
 		
 		public static void UpdateIdValues()
 		{
+			global::Couchbase.Lite.Android.Resource.String.library_name = global::messenger.Resource.String.library_name;
 		}
 		
 		public partial class Animation
@@ -1165,6 +1166,9 @@ namespace messenger
 			// aapt resource value: 0x7f02003a
 			public const int roundedEditText = 2130837562;
 			
+			// aapt resource value: 0x7f02003b
+			public const int shadow = 2130837563;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -1184,8 +1188,8 @@ namespace messenger
 			// aapt resource value: 0x7f090040
 			public const int ContactName = 2131296320;
 			
-			// aapt resource value: 0x7f090047
-			public const int ContactsListView = 2131296327;
+			// aapt resource value: 0x7f090045
+			public const int ContactsListView = 2131296325;
 			
 			// aapt resource value: 0x7f090031
 			public const int action_bar = 2131296305;
@@ -1235,14 +1239,11 @@ namespace messenger
 			// aapt resource value: 0x7f090013
 			public const int beginning = 2131296275;
 			
-			// aapt resource value: 0x7f090045
-			public const int btnExistingConversation = 2131296325;
+			// aapt resource value: 0x7f090042
+			public const int btnExistingConversation = 2131296322;
 			
-			// aapt resource value: 0x7f090046
-			public const int btnNewConversation = 2131296326;
-			
-			// aapt resource value: 0x7f090043
-			public const int btnSendMessage = 2131296323;
+			// aapt resource value: 0x7f090044
+			public const int btnNewConversation = 2131296324;
 			
 			// aapt resource value: 0x7f090029
 			public const int checkbox = 2131296297;
@@ -1319,8 +1320,8 @@ namespace messenger
 			// aapt resource value: 0x7f09002b
 			public const int radio = 2131296299;
 			
-			// aapt resource value: 0x7f090042
-			public const int sample_content_fragment = 2131296322;
+			// aapt resource value: 0x7f090043
+			public const int sample_content_fragment = 2131296323;
 			
 			// aapt resource value: 0x7f090035
 			public const int search_badge = 2131296309;
@@ -1373,14 +1374,11 @@ namespace messenger
 			// aapt resource value: 0x7f09000b
 			public const int tabMode = 2131296267;
 			
+			// aapt resource value: 0x7f090041
+			public const int text = 2131296321;
+			
 			// aapt resource value: 0x7f090027
 			public const int title = 2131296295;
-			
-			// aapt resource value: 0x7f090041
-			public const int txtContactInfo = 2131296321;
-			
-			// aapt resource value: 0x7f090044
-			public const int txtMessageBox = 2131296324;
 			
 			// aapt resource value: 0x7f090008
 			public const int up = 2131296264;
@@ -1496,7 +1494,7 @@ namespace messenger
 			public const int ContactListItem = 2130903063;
 			
 			// aapt resource value: 0x7f030018
-			public const int Conversation = 2130903064;
+			public const int ConversationListItem = 2130903064;
 			
 			// aapt resource value: 0x7f030019
 			public const int Main = 2130903065;
@@ -1520,14 +1518,14 @@ namespace messenger
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f0b0014
-			public const int ConversationActivity_label = 2131427348;
-			
-			// aapt resource value: 0x7f0b0012
-			public const int MainActivity_label = 2131427346;
+			// aapt resource value: 0x7f0b0015
+			public const int ConversationActivity_label = 2131427349;
 			
 			// aapt resource value: 0x7f0b0013
-			public const int NewConversationActivity_label = 2131427347;
+			public const int MainActivity_label = 2131427347;
+			
+			// aapt resource value: 0x7f0b0014
+			public const int NewConversationActivity_label = 2131427348;
 			
 			// aapt resource value: 0x7f0b0000
 			public const int abc_action_bar_home_description = 2131427328;
@@ -1577,11 +1575,14 @@ namespace messenger
 			// aapt resource value: 0x7f0b000f
 			public const int abc_toolbar_collapse_description = 2131427343;
 			
+			// aapt resource value: 0x7f0b0012
+			public const int app_name = 2131427346;
+			
 			// aapt resource value: 0x7f0b0011
-			public const int app_name = 2131427345;
+			public const int hello = 2131427345;
 			
 			// aapt resource value: 0x7f0b0010
-			public const int hello = 2131427344;
+			public const int library_name = 2131427344;
 			
 			static String()
 			{

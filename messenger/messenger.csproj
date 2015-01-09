@@ -60,6 +60,18 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.1.3.0.6292\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="Couchbase.Lite">
+      <HintPath>..\Components\couchbase-lite-net-1.0.0\lib\android\Couchbase.Lite.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Components\couchbase-lite-net-1.0.0\lib\android\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCL.raw">
+      <HintPath>..\Components\couchbase-lite-net-1.0.0\lib\android\SQLitePCL.raw.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCL.ugly">
+      <HintPath>..\Components\couchbase-lite-net-1.0.0\lib\android\SQLitePCL.ugly.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -71,8 +83,10 @@
     <Compile Include="Contact.cs" />
     <Compile Include="FloatingActionButton.cs" />
     <Compile Include="Extentions.cs" />
-    <Compile Include="SmsHandler.cs" />
     <Compile Include="DisplayActionSheet.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="MessageHandler.cs" />
+    <Compile Include="ConversationListViewAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -89,7 +103,6 @@
     <AndroidResource Include="Resources\layout\NewConversation.axml" />
     <AndroidResource Include="Resources\layout\ContactListItem.axml" />
     <AndroidResource Include="Resources\drawable\contactImage.png" />
-    <AndroidResource Include="Resources\layout\Conversation.axml" />
     <AndroidResource Include="Resources\drawable\fabBackground.xml" />
     <AndroidResource Include="Resources\values\dimens.xml" />
     <AndroidResource Include="Resources\drawable\ic_add.png" />
@@ -98,6 +111,8 @@
     <AndroidResource Include="Resources\drawable\fabIconSend.xml" />
     <AndroidResource Include="Resources\drawable\ic_send.png" />
     <AndroidResource Include="Resources\drawable\roundedEditText.xml" />
+    <AndroidResource Include="Resources\layout\ConversationListItem.axml" />
+    <AndroidResource Include="Resources\drawable\shadow.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.3.0.6292\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.3.0.6292\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
@@ -108,6 +123,10 @@
   <ItemGroup>
     <XamarinComponentReference Include="xamandroidsupportv7appcompat">
       <Version>21.0.3.0</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="couchbase-lite-net">
+      <Version>1.0.0</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>

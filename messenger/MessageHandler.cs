@@ -2,9 +2,9 @@
 
 namespace messenger
 {
-	public class SMSHandler
+	public class MessageHandler
 	{
-		public SMSHandler ()
+		public MessageHandler ()
 		{
 		}
 
