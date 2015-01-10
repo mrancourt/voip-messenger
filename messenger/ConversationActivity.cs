@@ -15,7 +15,7 @@ using Android.Util;
 using Android.Views.InputMethods;
 using Android.Views;
 using Utilities;
-
+using Newtonsoft.Json;
 
 namespace messenger
 {
@@ -23,7 +23,7 @@ namespace messenger
 	public class ConversationActivity : Activity
 	{
 
-		static readonly string Tag = "messenger";
+		static readonly string Tag = "conversations";
 
 		Query Query { get; set; }
 		LiveQuery LiveQuery { get; set; }
@@ -37,9 +37,17 @@ namespace messenger
 
 			RequestWindowFeature(WindowFeatures.IndeterminateProgress);
 
+			// Load contact infos
+			long contactId = Intent.GetLongExtra("Id", -1);
+			Contact contact = new Contact ().GetContactById(contactId, this);
+			Log.Verbose("ConversationActivity", contact.ToString());
+
+			// Instantiante Sms
+			SMS sms = new SMS(); 
+			sms.Target =  contact.NormalizedNumber.ToDigitsOnly ();
+
 			// Get database instance
-			Database = Manager.SharedInstance.GetDatabase(Tag.ToLower());
-			Database.Delete ();
+			Database = Manager.SharedInstance.GetDatabase(Tag.ToLower() + "_" + sms.Target);
 
 			// Get previous messages
 			Query = Message.GetQuery(Database);
@@ -59,11 +67,6 @@ namespace messenger
 			LinearLayout layout = (LinearLayout) FindViewById(Resource.Id.mainLinearLayout);
 			ListView listView = (ListView) FindViewById(Resource.Id.listViewMessages);
 
-			// Load contact infos
-			long contactId = Intent.GetLongExtra("Id", -1);
-			Contact contact = new Contact ().GetContactById(contactId, this);
-			Log.Verbose("ConversationActivity", contact.ToString());
-
 			// Set ActionBar to contact name
 			this.Title = contact.DisplayName;
 
@@ -71,11 +74,22 @@ namespace messenger
 				//MessageHandler smsHandler = new MessageHandler();
 				//smsHandler.sendSMS();
 
-				AddItem(newMessageText.Text);
+				sms.Message = newMessageText.Text;
+
+				Log.Verbose(Tag, JsonConvert.SerializeObject(sms));
+
+				SendSms(sms);
 				newMessageText.Text = "";
 
 				Log.Verbose("ConversationActivity","Message Sent");
 
+			};
+
+			Database.Changed += (sender, e) => {
+				var changes = e.Changes.ToList();
+				foreach (DocumentChange change in changes) {
+					Log.Verbose(Tag, "Document " + change.DocumentId + " changed");
+				}
 			};
 				
 			listView.Adapter = new ListLiveQueryAdapter(this, LiveQuery);
@@ -166,21 +180,21 @@ namespace messenger
 			}
 		}
 
-		private void AddItem(string text)
+		private void SendSms(SMS sms)
 		{
+			//var doc = Database.GetDocument(Tag.ToString () + "_" + sms.Target);
 			var doc = Database.CreateDocument();
 			var props = new Dictionary<string, object>
 			{
-				{ "time", DateTime.Now.ToString("yyyyMMddHHmmssffff")},
-				{ "type", "list" },
-				{ "text", text },
-				{ "checked", false}
+				{ "time", sms.Time},
+				{ "type", sms.Type},
+				{ "text", sms.Text}
 			};
 
 			doc.PutProperties(props);
-
+					
 		}
-
+			
 		public class ListLiveQueryAdapter : ConversationListViewAdapter 
 		{
 			public ListLiveQueryAdapter(Context context, LiveQuery query) 
@@ -202,6 +216,8 @@ namespace messenger
 				text.Text = (string)document.GetProperty("text") + 
 					System.Environment.NewLine + System.Environment.NewLine +
 					DateTime.ParseExact((string)document.GetProperty("time"), "yyyyMMddHHmmssffff", null).TimeAgo();
+
+
 
 				return view;
 

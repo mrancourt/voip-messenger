@@ -87,6 +87,7 @@
     <Compile Include="MessageHandler.cs" />
     <Compile Include="ConversationListViewAdapter.cs" />
     <Compile Include="CircleDrawable.cs" />
+    <Compile Include="SMS.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
