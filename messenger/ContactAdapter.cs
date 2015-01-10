@@ -6,6 +6,9 @@ using Android.Database;
 using Android.Content;
 using Android.Provider;
 using System.Collections.Generic;
+using Android.Graphics;
+using Android.Graphics.Drawables;
+using Android.Animation;
 
 // Refactoriser permettre de passer des parametres a la fonction fillcontacts. Ex pour recuperer un seul contact.
 
@@ -84,14 +87,27 @@ namespace messenger
 			var view = convertView ?? _activity.LayoutInflater.Inflate (
 				Resource.Layout.ContactListItem, parent, false);
 			var contactName = view.FindViewById<TextView> (Resource.Id.ContactName);
+			var lastMessage = view.FindViewById<TextView> (Resource.Id.LastMessage);
 			var contactImage = view.FindViewById<ImageView> (Resource.Id.ContactImage);
 			contactName.Text = _contactList [position].DisplayName;
-
-			contactName.Text = _contactList [position].ToString();
+			lastMessage.Text = "Last Message...";
 
 			if (_contactList [position].PhotoThumbnailId == null) {
 				contactImage = view.FindViewById<ImageView> (Resource.Id.ContactImage);
-				contactImage.SetImageResource (Resource.Drawable.contactImage);
+
+				// TODO: corriger ca
+				Bitmap contactImageBmp = BitmapFactory.DecodeResource (parent.Context.Resources, 1);
+
+				if (contactImageBmp == null) {
+
+					Bitmap.Config conf = Bitmap.Config.Argb8888; // see other conf types
+					Bitmap bmp = Bitmap.CreateBitmap(200, 200, conf);
+					bmp.EraseColor(Android.Graphics.Color.ParseColor("#0099CC"));
+
+					Drawable circleContactImage = new CircleDrawable(bmp);
+					contactImage.SetImageDrawable (circleContactImage);
+				}
+
 			}  else {
 				var contactUri = ContentUris.WithAppendedId (
 					ContactsContract.Contacts.ContentUri, _contactList [position].Id);

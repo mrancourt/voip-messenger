@@ -1185,11 +1185,14 @@ namespace messenger
 			// aapt resource value: 0x7f09003f
 			public const int ContactImage = 2131296319;
 			
-			// aapt resource value: 0x7f090040
-			public const int ContactName = 2131296320;
+			// aapt resource value: 0x7f090041
+			public const int ContactName = 2131296321;
 			
-			// aapt resource value: 0x7f090049
-			public const int ContactsListView = 2131296329;
+			// aapt resource value: 0x7f09004a
+			public const int ContactsListView = 2131296330;
+			
+			// aapt resource value: 0x7f090040
+			public const int LastMessage = 2131296320;
 			
 			// aapt resource value: 0x7f090031
 			public const int action_bar = 2131296305;
@@ -1239,14 +1242,14 @@ namespace messenger
 			// aapt resource value: 0x7f090013
 			public const int beginning = 2131296275;
 			
-			// aapt resource value: 0x7f090047
-			public const int btnExistingConversation = 2131296327;
-			
 			// aapt resource value: 0x7f090048
-			public const int btnNewConversation = 2131296328;
+			public const int btnExistingConversation = 2131296328;
 			
-			// aapt resource value: 0x7f090043
-			public const int btnSendMessage = 2131296323;
+			// aapt resource value: 0x7f090049
+			public const int btnNewConversation = 2131296329;
+			
+			// aapt resource value: 0x7f090044
+			public const int btnSendMessage = 2131296324;
 			
 			// aapt resource value: 0x7f090029
 			public const int checkbox = 2131296297;
@@ -1299,14 +1302,14 @@ namespace messenger
 			// aapt resource value: 0x7f090009
 			public const int listMode = 2131296265;
 			
-			// aapt resource value: 0x7f090045
-			public const int listViewMessages = 2131296325;
+			// aapt resource value: 0x7f090046
+			public const int listViewMessages = 2131296326;
 			
 			// aapt resource value: 0x7f090025
 			public const int list_item = 2131296293;
 			
-			// aapt resource value: 0x7f090041
-			public const int mainLinearLayout = 2131296321;
+			// aapt resource value: 0x7f090042
+			public const int mainLinearLayout = 2131296322;
 			
 			// aapt resource value: 0x7f090015
 			public const int middle = 2131296277;
@@ -1329,8 +1332,8 @@ namespace messenger
 			// aapt resource value: 0x7f09002b
 			public const int radio = 2131296299;
 			
-			// aapt resource value: 0x7f090042
-			public const int sample_content_fragment = 2131296322;
+			// aapt resource value: 0x7f090043
+			public const int sample_content_fragment = 2131296323;
 			
 			// aapt resource value: 0x7f090035
 			public const int search_badge = 2131296309;
@@ -1383,14 +1386,14 @@ namespace messenger
 			// aapt resource value: 0x7f09000b
 			public const int tabMode = 2131296267;
 			
-			// aapt resource value: 0x7f090046
-			public const int text = 2131296326;
+			// aapt resource value: 0x7f090047
+			public const int text = 2131296327;
 			
 			// aapt resource value: 0x7f090027
 			public const int title = 2131296295;
 			
-			// aapt resource value: 0x7f090044
-			public const int txtMessageBox = 2131296324;
+			// aapt resource value: 0x7f090045
+			public const int txtMessageBox = 2131296325;
 			
 			// aapt resource value: 0x7f090008
 			public const int up = 2131296264;
