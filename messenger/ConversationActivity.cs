@@ -42,7 +42,7 @@ namespace messenger
 			Log.Verbose("ConversationActivity", contact.ToString());
 
 			// Instantiante Sms
-			SMS sms = new SMS(); 
+			var sms = new SMS(); 
 			sms.Target =  contact.NormalizedNumber;
 
 			// Get database instance
@@ -53,7 +53,7 @@ namespace messenger
 
 			// Get previous messages
 			// TODO : Filer messages to get only those from current conversation
-			Query = Message.GetQuery(Database);
+			Query = SMSManager.GetQuery(Database, sms.Target);
 			Query.Completed += (sender, e) => 
 				Log.Verbose(Tag, e.ErrorInfo.ToString() ?? e.Rows.ToString());
 			LiveQuery = Query.ToLiveQuery();
@@ -74,18 +74,9 @@ namespace messenger
 			this.Title = contact.DisplayName;
 
 			sendMessageButton.Click += (sender, e) => {
-				//MessageHandler smsHandler = new MessageHandler();
-				//smsHandler.sendSMS();
-
 				sms.Message = newMessageText.Text;
-
-				Log.Verbose(Tag, JsonConvert.SerializeObject(sms));
-
 				SendSms(sms);
 				newMessageText.Text = "";
-
-				Log.Verbose("ConversationActivity","Message Sent");
-
 			};
 
 			Database.Changed += (sender, e) => {
@@ -97,7 +88,6 @@ namespace messenger
 				
 			// Bind listview adapyer to liveQuery
 			listView.Adapter = new ListLiveQueryAdapter(this, LiveQuery);
-
 		}
 
 		/**
@@ -124,7 +114,7 @@ namespace messenger
 		}
 
 		// Create document for conversation if not exists
-		private void initConversation (SMS sms) {
+		void initConversation (SMS sms) {
 
 			// Try to get document 
 			var doc = Database.GetExistingDocument (sms.Target);
@@ -143,7 +133,7 @@ namespace messenger
 			}
 		}
 
-		private void UpdateSync()
+		void UpdateSync()
 		{
 			if (Database == null)
 				return;
@@ -176,7 +166,7 @@ namespace messenger
 			}
 		}
 
-		private void ForgetSync()
+		void ForgetSync()
 		{
 			if (Pull != null) {
 				Pull.Changed -= ReplicationChanged;
@@ -207,7 +197,7 @@ namespace messenger
 			}
 		}
 
-		private void SendSms(SMS sms)
+		void SendSms(SMS sms)
 		{
 			var doc = Database.CreateDocument();
 			var props = new Dictionary<string, object>

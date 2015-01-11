@@ -1,4 +1,4 @@
-﻿using System;
+﻿//using System;
 using Android.App;
 using Android.Views;
 using Android.Widget;
@@ -11,6 +11,7 @@ using Android.Graphics.Drawables;
 using Android.Animation;
 
 // Refactoriser permettre de passer des parametres a la fonction fillcontacts. Ex pour recuperer un seul contact.
+using Android.Net;
 
 namespace messenger
 {
@@ -112,8 +113,11 @@ namespace messenger
 			{
 				var contactUri = ContentUris.WithAppendedId (
 					ContactsContract.Contacts.ContentUri, _contactList [position].Id);
+
+				#pragma warning disable 612, 618 
 				var contactPhotoUri = Android.Net.Uri.WithAppendedPath (contactUri,
 					Contacts.Photos.ContentDirectory);
+
 				contactImage.SetImageURI (contactPhotoUri);
 			}
 

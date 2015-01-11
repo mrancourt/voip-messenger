@@ -20,7 +20,7 @@ namespace messenger
 
 		protected Context Context;
 
-		public event EventHandler<QueryChangeEventArgs> DataSetChanged;
+		//public event EventHandler<QueryChangeEventArgs> DataSetChanged;
 
 		public ConversationListViewAdapter (Context context, LiveQuery query)
 		{

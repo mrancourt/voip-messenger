@@ -83,12 +83,12 @@
     <Compile Include="Contact.cs" />
     <Compile Include="FloatingActionButton.cs" />
     <Compile Include="Extentions.cs" />
-    <Compile Include="Message.cs" />
     <Compile Include="MessageHandler.cs" />
     <Compile Include="ConversationListViewAdapter.cs" />
     <Compile Include="CircleDrawable.cs" />
     <Compile Include="SMS.cs" />
     <Compile Include="ConversationsListViewAdapter.cs" />
+    <Compile Include="SMSManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
