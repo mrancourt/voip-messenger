@@ -66,8 +66,8 @@ namespace messenger
 			// Rethrive layout fields
 			TextView newMessageText = FindViewById<TextView> (Resource.Id.txtMessageBox);
 			FloatingActionButton sendMessageButton = FindViewById<FloatingActionButton> (Resource.Id.btnSendMessage);
-			LinearLayout layout = (LinearLayout) FindViewById(Resource.Id.mainLinearLayout);
-			ListView listView = (ListView) FindViewById(Resource.Id.listViewMessages);
+			LinearLayout layout = FindViewById<LinearLayout> (Resource.Id.mainLinearLayout);
+			ListView listView = FindViewById<ListView>(Resource.Id.listViewMessages);
 
 			// Set ActionBar to contact name
 			this.Title = contact.DisplayName;

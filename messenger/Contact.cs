@@ -48,7 +48,6 @@ namespace messenger
 				ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri,
 				ContactsContract.CommonDataKinds.Phone.Number,
 				ContactsContract.CommonDataKinds.Phone.NormalizedNumber
-
 			};
 				
 			// Load query results
@@ -62,10 +61,22 @@ namespace messenger
 					PhotoThumbnailId = cursor.GetString (cursor.GetColumnIndex (projection [2])),
 					Number = cursor.GetString (cursor.GetColumnIndex (projection [3])),
 					NormalizedNumber = cursor.GetString (cursor.GetColumnIndex (projection [4]))
-				};
+					};
 			} 
 
 			return contact;
 		}
+
+		public Android.Net.Uri GetThumbnailUri () {
+			var contactUri = ContentUris.WithAppendedId (
+				ContactsContract.Contacts.ContentUri, Id);
+
+			#pragma warning disable 612, 618 
+			var contactPhotoUri = Android.Net.Uri.WithAppendedPath (contactUri,
+				Contacts.Photos.ContentDirectory);
+
+			return contactPhotoUri;
+		}
+
 	}
 }

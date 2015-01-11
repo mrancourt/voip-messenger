@@ -106,7 +106,8 @@ namespace messenger
 				var txtContactName = view.FindViewById<TextView>(Resource.Id.txtContactName);
 				var txtLastMessage = view.FindViewById<TextView>(Resource.Id.txtLastMessage);
 				var txtLastMessageTime = view.FindViewById<TextView>(Resource.Id.txtLastMessageTime);
-
+				var imgContactThumb = view.FindViewById<ImageView> (Resource.Id.imgContactThumb);
+					
 				txtContactName.Text = contact.DisplayName;
 
 				if (document.GetProperty ("lastMessage") != null) {
@@ -117,6 +118,11 @@ namespace messenger
 					txtLastMessageTime.Text = DateTime.ParseExact (
 						(string)document.GetProperty ("lastMessageTime"), "yyyyMMddHHmmssffff", null
 					).TimeAgo ();
+				}
+
+				// TODO : Add round image and placeholder image if contact does not have any 
+				if (contact.PhotoThumbnailId != null && contact.GetThumbnailUri () != null) {
+					imgContactThumb.SetImageURI (contact.GetThumbnailUri());
 				}
 					
 				view.SetTag (Resource.String.NormalizedPhone, (string)document.GetProperty ("conversationId"));

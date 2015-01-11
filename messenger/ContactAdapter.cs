@@ -10,8 +10,23 @@ using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Animation;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+using Android.Provider;
+using Android.Database;
+
+
 // Refactoriser permettre de passer des parametres a la fonction fillcontacts. Ex pour recuperer un seul contact.
 using Android.Net;
+using System;
 
 namespace messenger
 {
@@ -55,7 +70,6 @@ namespace messenger
 
 			if (cursor.MoveToFirst ()) 
 			{
-
 				do {
 					_contactList.Add(new Contact{
 						Id = cursor.GetLong(cursor.GetColumnIndex(projection[0])),
@@ -63,6 +77,7 @@ namespace messenger
 						PhotoThumbnailId = cursor.GetString(cursor.GetColumnIndex(projection[2])),
 						Number = cursor.GetString(cursor.GetColumnIndex(projection[3])),
 						NormalizedNumber = cursor.GetString(cursor.GetColumnIndex(projection[4]))
+
 					});
 
 				} while (cursor.MoveToNext ());
@@ -87,40 +102,51 @@ namespace messenger
 			var view = convertView ?? _activity.LayoutInflater.Inflate (
 				Resource.Layout.ContactListItem, parent, false);
 
-			var contactName = view.FindViewById<TextView> (Resource.Id.ContactName);
-			var lastMessage = view.FindViewById<TextView> (Resource.Id.LastMessage);
-			var contactImage = view.FindViewById<ImageView> (Resource.Id.ContactImage);
-			contactName.Text = _contactList [position].DisplayName;
-			lastMessage.Text = "Last Message...";
+			var txtContactName = view.FindViewById<TextView> (Resource.Id.txtContactName);
+			var txtPhoneNumber = view.FindViewById<TextView> (Resource.Id.txtPhoneNumber);
+			var imgContactThumb = view.FindViewById<ImageView> (Resource.Id.imgContactThumb);
+			txtPhoneNumber.Text = _contactList [position].Number;
 
-			if (_contactList [position].PhotoThumbnailId == null) {
-				contactImage = view.FindViewById<ImageView> (Resource.Id.ContactImage);
+			// For each number but the first one
+			if (position > 0) {
+				// We are on the first contact's number
+				if (_contactList [position - 1].Id != _contactList [position].Id) {
 
-				// TODO: corriger ca
-				Bitmap contactImageBmp = BitmapFactory.DecodeResource (parent.Context.Resources, 1);
+					// Set contact name
+					txtContactName.Text = _contactList [position].DisplayName;
 
-				if (contactImageBmp == null) {
+					// Handle contact's image
+					if (_contactList [position].PhotoThumbnailId == null) {
+						imgContactThumb = view.FindViewById<ImageView> (Resource.Id.imgContactThumb);
 
-					Bitmap.Config conf = Bitmap.Config.Argb8888; // see other conf types
-					Bitmap bmp = Bitmap.CreateBitmap(200, 200, conf);
-					bmp.EraseColor(Android.Graphics.Color.ParseColor("#0099CC"));
+						// TODO: corriger ca
+						Bitmap contactImageBmp = BitmapFactory.DecodeResource (parent.Context.Resources, 1);
 
-					Drawable circleContactImage = new CircleDrawable(bmp);
-					contactImage.SetImageDrawable (circleContactImage);
+						if (contactImageBmp == null) {
+
+							Bitmap.Config conf = Bitmap.Config.Argb8888; // see other conf types
+							Bitmap bmp = Bitmap.CreateBitmap (200, 200, conf);
+							bmp.EraseColor (Android.Graphics.Color.ParseColor ("#0099CC"));
+
+							Drawable circleContactImage = new CircleDrawable (bmp);
+							imgContactThumb.SetImageDrawable (circleContactImage);
+						}
+
+					} else {
+						imgContactThumb.SetImageURI ( _contactList[position].GetThumbnailUri());
+					}
+				} 
+				// We are on additional contact's number
+				else 
+				{
+					// Remove image
+					imgContactThumb.SetImageDrawable(null);
+
+					// Empty contact name
+					txtContactName.Text = null;
 				}
-
-			}  
-			else 
-			{
-				var contactUri = ContentUris.WithAppendedId (
-					ContactsContract.Contacts.ContentUri, _contactList [position].Id);
-
-				#pragma warning disable 612, 618 
-				var contactPhotoUri = Android.Net.Uri.WithAppendedPath (contactUri,
-					Contacts.Photos.ContentDirectory);
-
-				contactImage.SetImageURI (contactPhotoUri);
 			}
+
 
 			view.SetTag (Resource.String.NormalizedPhone, _contactList [position].DisplayName);
 

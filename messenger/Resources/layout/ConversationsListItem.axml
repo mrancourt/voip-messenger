@@ -4,7 +4,7 @@
     android:layout_height="?android:attr/listPreferredItemHeightLarge"
     android:padding="6dip">
     <ImageView
-        android:id="@+id/imgContact"
+        android:id="@+id/imgContactThumb"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="5dp"
@@ -14,7 +14,7 @@
         android:text="ContactName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/imgContact"
+        android:layout_toRightOf="@id/imgContactThumb"
         android:layout_marginTop="5dp"
         android:textStyle="bold" />
     <TextView
@@ -22,13 +22,13 @@
         android:text="txtLastMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/imgContact"
+        android:layout_toRightOf="@id/imgContactThumb"
         android:layout_below="@id/txtContactName" />
     <TextView
         android:id="@+id/txtLastMessageTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/imgContact"
+        android:layout_toRightOf="@id/imgContactThumb"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:singleLine="true"

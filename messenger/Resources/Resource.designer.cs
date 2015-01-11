@@ -1182,17 +1182,8 @@ namespace messenger
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f09003f
-			public const int ContactImage = 2131296319;
-			
-			// aapt resource value: 0x7f090041
-			public const int ContactName = 2131296321;
-			
-			// aapt resource value: 0x7f09004e
-			public const int ContactsListView = 2131296334;
-			
-			// aapt resource value: 0x7f090040
-			public const int LastMessage = 2131296320;
+			// aapt resource value: 0x7f09004c
+			public const int ContactsListView = 2131296332;
 			
 			// aapt resource value: 0x7f090031
 			public const int action_bar = 2131296305;
@@ -1242,8 +1233,8 @@ namespace messenger
 			// aapt resource value: 0x7f090013
 			public const int beginning = 2131296275;
 			
-			// aapt resource value: 0x7f09004c
-			public const int btnNewConversation = 2131296332;
+			// aapt resource value: 0x7f09004a
+			public const int btnNewConversation = 2131296330;
 			
 			// aapt resource value: 0x7f090044
 			public const int btnSendMessage = 2131296324;
@@ -1296,14 +1287,14 @@ namespace messenger
 			// aapt resource value: 0x7f090023
 			public const int image = 2131296291;
 			
-			// aapt resource value: 0x7f090048
-			public const int imgContact = 2131296328;
+			// aapt resource value: 0x7f09003f
+			public const int imgContactThumb = 2131296319;
 			
 			// aapt resource value: 0x7f090009
 			public const int listMode = 2131296265;
 			
-			// aapt resource value: 0x7f09004d
-			public const int listViewConversations = 2131296333;
+			// aapt resource value: 0x7f09004b
+			public const int listViewConversations = 2131296331;
 			
 			// aapt resource value: 0x7f090046
 			public const int listViewMessages = 2131296326;
@@ -1395,17 +1386,20 @@ namespace messenger
 			// aapt resource value: 0x7f090027
 			public const int title = 2131296295;
 			
+			// aapt resource value: 0x7f090041
+			public const int txtContactName = 2131296321;
+			
+			// aapt resource value: 0x7f090048
+			public const int txtLastMessage = 2131296328;
+			
 			// aapt resource value: 0x7f090049
-			public const int txtContactName = 2131296329;
-			
-			// aapt resource value: 0x7f09004a
-			public const int txtLastMessage = 2131296330;
-			
-			// aapt resource value: 0x7f09004b
-			public const int txtLastMessageTime = 2131296331;
+			public const int txtLastMessageTime = 2131296329;
 			
 			// aapt resource value: 0x7f090045
 			public const int txtMessageBox = 2131296325;
+			
+			// aapt resource value: 0x7f090040
+			public const int txtPhoneNumber = 2131296320;
 			
 			// aapt resource value: 0x7f090008
 			public const int up = 2131296264;
