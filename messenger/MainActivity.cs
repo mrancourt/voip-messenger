@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Android.Views;
+using Utilities;
 
 namespace messenger
 {
@@ -23,6 +24,7 @@ namespace messenger
 		static readonly string Tag = "conversation";
 		Query Query { get; set; }
 		Database Database { get; set; }
+		LiveQuery LiveQuery { get; set; }
 
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -32,21 +34,22 @@ namespace messenger
 
 			// Get our button from the layout resource,
 			// and attach an event to it
-			Button btnExistingConversation = FindViewById<Button> (Resource.Id.btnExistingConversation);
 			FloatingActionButton btnNewConversation = FindViewById<FloatingActionButton> (Resource.Id.btnNewConversation);
-			TextView txtConversationList = FindViewById<TextView> (Resource.Id.txtConversationList);
+			ListView ConversationslistView = FindViewById<ListView>(Resource.Id.listViewConversations);
 
 			btnNewConversation.Click += (sender, e) =>
 			{
 				var intent = new Intent(this, typeof(NewConversationActivity));
 				StartActivity(intent);
 			};
-
-			btnExistingConversation.Click += (sender, e) => {
+				
+			ConversationslistView.ItemClick += (sender, e) => {
+				// Get conversation document
+				var doc = ConversationslistView.GetItemAtPosition(e.Position).Cast<Document>();
 				var intent = new Intent(this, typeof(ConversationActivity));
+				intent.PutExtra ("normalizedPhone", (string) doc.GetProperty("conversationId"));
 				StartActivity(intent);
 			};
-
 			// Get database instance
 			Database = Manager.SharedInstance.GetDatabase(Tag.ToLower());
 
@@ -68,35 +71,57 @@ namespace messenger
 				}
 					
 			}, "1");
-
-
+				
 			// Set up a query for a view that indexes blog posts, to get the latest:
 			var query = Database.GetView("convos").CreateQuery();
 			query.Descending = true;
 			query.Limit = 20;
+			query.Completed += (sender, e) => 
+				Log.Verbose(Tag, e.ErrorInfo.ToString() ?? e.Rows.ToString());
+			LiveQuery = query.ToLiveQuery ();
 
+			// Bind listview adapyer to liveQuery
+			ConversationslistView.Adapter = new ListLiveQueryAdapter(this, LiveQuery);
+		}
 
-			var rows = query.Run();
+		public class ListLiveQueryAdapter : ConversationListViewAdapter 
+		{
+			public ListLiveQueryAdapter(Context context, LiveQuery query) 
+				: base(context, query) { }
 
-			foreach (var row in rows) 
+			public override Android.Views.View GetView(int position,
+				Android.Views.View convertView, ViewGroup parent)
 			{
-
-				IDictionary<string, object> props = row.Document.Properties;
-
-				txtConversationList.Text += System.Environment.NewLine;
-
-				foreach (var prop in props) {
-					txtConversationList.Text += System.Environment.NewLine +
-						prop.Key + " => " + prop;
+				var view = convertView;
+				if (view == null)
+				{
+					view = ((Activity)Context).LayoutInflater.Inflate(
+						Resource.Layout.ConversationsListItem, null);
 				}
+
+				var document = this[position];
+
+				var txtContactName = view.FindViewById<TextView>(Resource.Id.txtContactName);
+				var txtLastMessage = view.FindViewById<TextView>(Resource.Id.txtLastMessage);
+				var txtLastMessageTime = view.FindViewById<TextView>(Resource.Id.txtLastMessageTime);
+
+				txtContactName.Text = (string)document.GetProperty ("conversationId");
+
+				if (document.GetProperty ("lastMessage") != null) {
+					txtLastMessage.Text = (string)document.GetProperty ("lastMessage");
+				}
+					
+				if (document.GetProperty ("lastMessageTime") != null) {
+					txtLastMessageTime.Text = DateTime.ParseExact (
+						(string)document.GetProperty ("lastMessageTime"), "yyyyMMddHHmmssffff", null
+					).TimeAgo ();
+				}
+			
+				view.SetTag (Resource.String.NormalizedPhone, (string)document.GetProperty ("conversationId"));
+
+				return view;
+
 			}
-
-			// ####################################################################
-			// Intent convoIntent = new Intent(this, typeof(ConversationActivity));
-			// convoIntent.PutExtra ("Id", (long)165);
-			// StartActivity (convoIntent);
-			// ####################################################################
-
 		}
 	}
 }

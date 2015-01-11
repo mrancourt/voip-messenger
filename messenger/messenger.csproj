@@ -88,6 +88,7 @@
     <Compile Include="ConversationListViewAdapter.cs" />
     <Compile Include="CircleDrawable.cs" />
     <Compile Include="SMS.cs" />
+    <Compile Include="ConversationsListViewAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -115,6 +116,7 @@
     <AndroidResource Include="Resources\layout\ConversationListItem.axml" />
     <AndroidResource Include="Resources\drawable\shadow.xml" />
     <AndroidResource Include="Resources\layout\Conversation.axml" />
+    <AndroidResource Include="Resources\layout\ConversationsListItem.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.3.0.6292\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.3.0.6292\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />

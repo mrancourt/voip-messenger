@@ -3,6 +3,7 @@
 	<string name="hello">Hello World, Click Me!</string>
 
 	<string name="app_name">messenger</string>
+	<string name="NormalizedPhone">NormalizedPhone</string>
 
 	<string name="MainActivity.label">Messenger</string>
 	<string name="NewConversationActivity.label">Nouvelle conversation</string>

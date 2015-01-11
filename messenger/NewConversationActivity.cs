@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Utilities;
 
 namespace messenger
 {
@@ -30,12 +31,18 @@ namespace messenger
 			contentListView.Adapter = contactAdapter;
 
 			contentListView.ItemClick += (sender, e) => {
+			
+				var contact = (Contact) contentListView.GetItemAtPosition(e.Position);
+
 				var intent = new Intent(this, typeof(ConversationActivity));
-				intent.PutExtra ("Id", e.Id);
+				intent.PutExtra ("normalizedPhone", contact.NormalizedNumber);
 				StartActivity(intent);
 			};
 		}
 
+		/**
+		 * Handle back button
+		 **/
 		public override bool OnOptionsItemSelected(IMenuItem item)
 		{
 			switch (item.ItemId)
@@ -48,6 +55,7 @@ namespace messenger
 				return base.OnOptionsItemSelected(item);
 			}
 		}
+
 	}
 }
 

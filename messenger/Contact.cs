@@ -4,10 +4,11 @@ using Android.Content;
 using Android.Database;
 using Android.Provider;
 using System.Collections.Generic;
+using Android.Net;
 
 namespace messenger
 {
-	public class Contact
+	public class Contact : Java.Lang.Object
 	{
 		public long Id { get; set; }
 		public string DisplayName { get; set; }
@@ -16,7 +17,28 @@ namespace messenger
 		public string NormalizedNumber { get; set; }
 
 		public Contact GetContactById(long Id, Activity activity) {
-			Contact contact = new Contact() ;
+			// Build query statement
+			const string selection = ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + "= ?";
+			string[] selectionArgs = { Id.ToString() };
+
+			Contact contact = GetContact (activity, selection, selectionArgs);
+
+			return contact ;
+		}
+
+		public Contact GetContactByPhone(string normalizedPhone, Activity activity) {
+			// Build query statement
+			const string selection = ContactsContract.CommonDataKinds.Phone.NormalizedNumber + "= ?";
+			string[] selectionArgs = { normalizedPhone.ToString() };
+
+			Contact contact = GetContact (activity, selection, selectionArgs);
+
+			return contact ;
+		}
+
+		protected Contact GetContact (Activity activity, string selection = null, string[] selectionArgs = null) 
+		{
+			var contact = new Contact() ;
 
 			var uri = ContactsContract.CommonDataKinds.Phone.ContentUri;
 
@@ -28,16 +50,10 @@ namespace messenger
 				ContactsContract.CommonDataKinds.Phone.NormalizedNumber
 
 			};
-
-			// Build query statement
-			string selection = ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + "= ?";
-			string[] selectionArgs = { Id.ToString() };
-
+				
 			// Load query results
 			var loader = new CursorLoader (activity, uri, projection, selection, selectionArgs, null);
 			var cursor = (ICursor)loader.LoadInBackground ();
-
-			List<Contact> contactList = new List<Contact> ();
 
 			if (cursor.MoveToFirst ()) {
 				contact = new Contact {
@@ -51,16 +67,5 @@ namespace messenger
 
 			return contact;
 		}
-
-		public override string ToString() {
-			string contactInfo = 
-				Id + Environment.NewLine + 
-				DisplayName + Environment.NewLine + 
-				Number + " => " + NormalizedNumber + " " + Environment.NewLine +
-				PhotoThumbnailId ;
-
-			return contactInfo;
-		}
-
 	}
 }

@@ -73,9 +73,8 @@ namespace messenger
 		}
 
 		public override Java.Lang.Object GetItem (int position) {
-			// could wrap a Contact in a Java.Lang.Object
-			// to return it here if needed
-			return null;
+			// wrap Contact in a Java.Lang.Object
+			return _contactList [position];
 		}
 
 		public override long GetItemId (int position) {
@@ -108,13 +107,18 @@ namespace messenger
 					contactImage.SetImageDrawable (circleContactImage);
 				}
 
-			}  else {
+			}  
+			else 
+			{
 				var contactUri = ContentUris.WithAppendedId (
 					ContactsContract.Contacts.ContentUri, _contactList [position].Id);
 				var contactPhotoUri = Android.Net.Uri.WithAppendedPath (contactUri,
 					Contacts.Photos.ContentDirectory);
 				contactImage.SetImageURI (contactPhotoUri);
 			}
+
+			view.SetTag (Resource.String.NormalizedPhone, _contactList [position].DisplayName);
+
 			return view;
 		}
 	}

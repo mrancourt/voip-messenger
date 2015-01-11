@@ -37,13 +37,13 @@ namespace messenger
 			RequestWindowFeature(WindowFeatures.IndeterminateProgress);
 
 			// Load contact infos
-			long contactId = Intent.GetLongExtra("Id", -1);
-			Contact contact = new Contact ().GetContactById(contactId, this);
+			string normalizedPhone = Intent.GetStringExtra("normalizedPhone");
+			Contact contact = new Contact ().GetContactByPhone(normalizedPhone, this);
 			Log.Verbose("ConversationActivity", contact.ToString());
 
 			// Instantiante Sms
 			SMS sms = new SMS(); 
-			sms.Target =  contact.NormalizedNumber.ToDigitsOnly ();
+			sms.Target =  contact.NormalizedNumber;
 
 			// Get database instance
 			Database = Manager.SharedInstance.GetDatabase(Tag.ToLower());
@@ -55,7 +55,7 @@ namespace messenger
 			// TODO : Filer messages to get only those from current conversation
 			Query = Message.GetQuery(Database);
 			Query.Completed += (sender, e) => 
-				Log.Verbose("ConversationActivity", e.ErrorInfo.ToString() ?? e.Rows.ToString());
+				Log.Verbose(Tag, e.ErrorInfo.ToString() ?? e.Rows.ToString());
 			LiveQuery = Query.ToLiveQuery();
 		
 			SetContentView (Resource.Layout.Conversation);
@@ -95,10 +95,14 @@ namespace messenger
 				}
 			};
 				
+			// Bind listview adapyer to liveQuery
 			listView.Adapter = new ListLiveQueryAdapter(this, LiveQuery);
 
 		}
 
+		/**
+		 * Handle back button
+		 **/
 		public override bool OnOptionsItemSelected(IMenuItem item)
 		{
 			switch (item.ItemId)
@@ -123,18 +127,18 @@ namespace messenger
 		private void initConversation (SMS sms) {
 
 			// Try to get document 
-			var doc = Database.GetExistingDocument (Tag.ToString() + "_" + sms.Target);
+			var doc = Database.GetExistingDocument (sms.Target);
 
 			// Document does not exists, let's create a new one
 			if (doc == null) {
 				var properties = new Dictionary<string, object>
 				{
-					{ "conversationId", Tag.ToString() + sms.Target },
+					{ "conversationId", sms.Target },
 					{ "type", Tag.ToString() },
 					{ "lastessage", null },
 					{ "lastMessageTime", null }
 				};
-				var document = Database.GetDocument(Tag.ToString() + "_" + sms.Target);
+				var document = Database.GetDocument(sms.Target);
 				var rev = document.PutProperties(properties);
 			}
 		}
@@ -208,7 +212,7 @@ namespace messenger
 			var doc = Database.CreateDocument();
 			var props = new Dictionary<string, object>
 			{
-				{ "conversationId", Tag.ToString () + "_" + sms.Target },
+				{ "conversationId", sms.Target },
 				{ "type", typeof(SMS).Name.ToLower() },
 				{ "time", sms.Time },
 				{ "text", sms.Text }
@@ -242,7 +246,6 @@ namespace messenger
 				return view;
 
 			}
-
 		}
 	}
 }

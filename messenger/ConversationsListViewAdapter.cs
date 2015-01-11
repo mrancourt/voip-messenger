@@ -3,28 +3,26 @@ using Android.Content;
 using Android.Views;
 using Android.Widget;
 using Couchbase.Lite;
-using Sharpen;
 using System;
-using System.Linq;
 using JObject = Java.Lang.Object;
 using CBDocument = Couchbase.Lite.Document;
-using Java.Lang.Annotation;
+using Android.Util;
 
 namespace messenger
 {
-	public class ConversationListViewAdapter : BaseAdapter <CBDocument>
+	public class ConversationsListViewAdapter : BaseAdapter <CBDocument>
 	{
 		readonly LiveQuery query;
 
-		private QueryEnumerator enumerator;
+		QueryEnumerator enumerator;
 
 		protected Context Context;
 
 		public event EventHandler<QueryChangeEventArgs> DataSetChanged;
 
-		public ConversationListViewAdapter (Context context, LiveQuery query)
+		public ConversationsListViewAdapter (Context context, LiveQuery query)
 		{
-			this.Context = context;
+			Context = context;
 			this.query = query;
 			query.Changed += (sender, e) => {
 				enumerator = e.Rows;

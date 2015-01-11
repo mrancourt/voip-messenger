@@ -3,11 +3,6 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <Button
-        android:text="@string/ConversationActivity.label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnExistingConversation" />
     <FrameLayout
         android:id="@+id/sample_content_fragment"
         android:layout_weight="2"
@@ -31,10 +26,15 @@
                 android:layout_gravity="center"
                 android:duplicateParentState="true" />
         </messenger.FloatingActionButton>
-        <TextView
-            android:text="Conversation List"
+        <ListView
+            android:id="@+id/listViewConversations"
+            android:minWidth="25px"
+            android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/txtConversationList" />
+            android:divider="@null"
+            android:stackFromBottom="false"
+            android:transcriptMode="alwaysScroll"
+            android:layout_marginBottom="80dp" />
     </FrameLayout>
 </LinearLayout>
