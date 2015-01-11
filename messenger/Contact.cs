@@ -16,7 +16,7 @@ namespace messenger
 		public string Number { get; set; }
 		public string NormalizedNumber { get; set; }
 
-		public Contact GetContactById(long Id, Activity activity) {
+		public static Contact GetContactById(long Id, Activity activity) {
 			// Build query statement
 			const string selection = ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + "= ?";
 			string[] selectionArgs = { Id.ToString() };
@@ -26,17 +26,17 @@ namespace messenger
 			return contact ;
 		}
 
-		public Contact GetContactByPhone(string normalizedPhone, Activity activity) {
+		public static Contact GetContactByPhone(string normalizedPhone, Activity activity) {
 			// Build query statement
 			const string selection = ContactsContract.CommonDataKinds.Phone.NormalizedNumber + "= ?";
 			string[] selectionArgs = { normalizedPhone.ToString() };
 
-			Contact contact = GetContact (activity, selection, selectionArgs);
+			Contact contact = Contact.GetContact (activity, selection, selectionArgs);
 
 			return contact ;
 		}
 
-		protected Contact GetContact (Activity activity, string selection = null, string[] selectionArgs = null) 
+		protected static Contact GetContact (Activity activity, string selection = null, string[] selectionArgs = null) 
 		{
 			var contact = new Contact() ;
 

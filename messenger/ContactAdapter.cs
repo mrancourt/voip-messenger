@@ -86,6 +86,7 @@ namespace messenger
 		{
 			var view = convertView ?? _activity.LayoutInflater.Inflate (
 				Resource.Layout.ContactListItem, parent, false);
+
 			var contactName = view.FindViewById<TextView> (Resource.Id.ContactName);
 			var lastMessage = view.FindViewById<TextView> (Resource.Id.LastMessage);
 			var contactImage = view.FindViewById<ImageView> (Resource.Id.ContactImage);

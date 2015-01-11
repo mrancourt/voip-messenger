@@ -38,8 +38,7 @@ namespace messenger
 
 			// Load contact infos
 			string normalizedPhone = Intent.GetStringExtra("normalizedPhone");
-			Contact contact = new Contact ().GetContactByPhone(normalizedPhone, this);
-			Log.Verbose("ConversationActivity", contact.ToString());
+			Contact contact = Contact.GetContactByPhone(normalizedPhone, this);
 
 			// Instantiante Sms
 			var sms = new SMS(); 
@@ -125,7 +124,7 @@ namespace messenger
 				{
 					{ "conversationId", sms.Target },
 					{ "type", Tag.ToString() },
-					{ "lastessage", null },
+					{ "lastMessage", null },
 					{ "lastMessageTime", null }
 				};
 				var document = Database.GetDocument(sms.Target);
@@ -199,16 +198,29 @@ namespace messenger
 
 		void SendSms(SMS sms)
 		{
-			var doc = Database.CreateDocument();
+			// Insert message
+			var docMessage = Database.CreateDocument();
 			var props = new Dictionary<string, object>
 			{
 				{ "conversationId", sms.Target },
 				{ "type", typeof(SMS).Name.ToLower() },
 				{ "time", sms.Time },
-				{ "text", sms.Text }
+				{ "text", sms.Message }
 			};
+			docMessage.PutProperties(props);
 
-			doc.PutProperties(props);
+			// Update conversation 
+			// TODO : check if message update is OK
+			var docConversation = Database.GetDocument(sms.Target);
+			docConversation.Update((UnsavedRevision newRevision) => 
+				{
+					var properties = newRevision.Properties;
+					properties["conversationId"] = sms.Target;
+					properties["type"] = Tag.ToString();
+					properties["lastMessage"] =  sms.Message;
+					properties["lastMessageTime"] = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+					return true;
+				});
 		}
 			
 		public class ListLiveQueryAdapter : ConversationListViewAdapter 

@@ -10,25 +10,6 @@
         android:layout_margin="5dp"
         android:src="@drawable/contactImage" />
     <TextView
-        android:id="@+id/txtLastMessageTime"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/imgContact"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:text="txtLastMessageTime"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp" />
-    <TextView
-        android:id="@+id/txtLastMessage"
-        android:text="txtLastMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/txtLastMessageTime"
-        android:layout_toRightOf="@id/imgContact" />
-    <TextView
         android:id="@+id/txtContactName"
         android:text="ContactName"
         android:layout_width="wrap_content"
@@ -36,4 +17,22 @@
         android:layout_toRightOf="@id/imgContact"
         android:layout_marginTop="5dp"
         android:textStyle="bold" />
+    <TextView
+        android:id="@+id/txtLastMessage"
+        android:text="txtLastMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/imgContact"
+        android:layout_below="@id/txtContactName" />
+    <TextView
+        android:id="@+id/txtLastMessageTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/imgContact"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:text="txtLastMessageTime"
+        android:layout_below="@id/txtLastMessage" />
 </RelativeLayout>

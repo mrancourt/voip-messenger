@@ -32,6 +32,7 @@ namespace messenger
 
 			contentListView.ItemClick += (sender, e) => {
 			
+				// Get selected contact infos
 				var contact = (Contact) contentListView.GetItemAtPosition(e.Position);
 
 				var intent = new Intent(this, typeof(ConversationActivity));

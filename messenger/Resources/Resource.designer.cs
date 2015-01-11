@@ -1161,7 +1161,7 @@ namespace messenger
 			public const int ic_send = 2130837560;
 			
 			// aapt resource value: 0x7f020039
-			public const int Icon = 2130837561;
+			public const int icon = 2130837561;
 			
 			// aapt resource value: 0x7f02003a
 			public const int roundedEditText = 2130837562;
@@ -1395,14 +1395,14 @@ namespace messenger
 			// aapt resource value: 0x7f090027
 			public const int title = 2131296295;
 			
-			// aapt resource value: 0x7f09004b
-			public const int txtContactName = 2131296331;
+			// aapt resource value: 0x7f090049
+			public const int txtContactName = 2131296329;
 			
 			// aapt resource value: 0x7f09004a
 			public const int txtLastMessage = 2131296330;
 			
-			// aapt resource value: 0x7f090049
-			public const int txtLastMessageTime = 2131296329;
+			// aapt resource value: 0x7f09004b
+			public const int txtLastMessageTime = 2131296331;
 			
 			// aapt resource value: 0x7f090045
 			public const int txtMessageBox = 2131296325;

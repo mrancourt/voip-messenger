@@ -18,7 +18,7 @@ namespace messenger
 
 		protected Context Context;
 
-		//public event EventHandler<QueryChangeEventArgs> DataSetChanged;
+		public event EventHandler<QueryChangeEventArgs> DataSetChanged;
 
 		public ConversationsListViewAdapter (Context context, LiveQuery query)
 		{
@@ -32,7 +32,7 @@ namespace messenger
 			//TODO: Revise
 			query.Start();
 		}
-
+			
 		public override int Count
 		{
 			get { 

@@ -10,7 +10,6 @@ namespace messenger
 		public string Target { get; set; }
 		public string Time = DateTime.Now.ToString("yyyyMMddHHmmssffff");
 		public string Type = "list";
-		public string Text = "text";
 
 	}
 }

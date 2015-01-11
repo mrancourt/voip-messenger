@@ -42,7 +42,7 @@ namespace messenger
 				var intent = new Intent(this, typeof(NewConversationActivity));
 				StartActivity(intent);
 			};
-				
+
 			ConversationslistView.ItemClick += (sender, e) => {
 				// Get conversation document
 				var doc = ConversationslistView.GetItemAtPosition(e.Position).Cast<Document>();
@@ -54,10 +54,10 @@ namespace messenger
 			Database = Manager.SharedInstance.GetDatabase(Tag.ToLower());
 
 			// Create a view and register its map function:
-			var view = Database.GetView ("convos");
+			var view = Database.GetView ("conversations");
 
 			view.SetMap ((doc, emit) => {
-			
+
 				if (!doc.ContainsKey("type")) 
 				{
 					return;
@@ -66,16 +66,16 @@ namespace messenger
 				// If document is a conversation, we emit it
 				if (doc["type"].ToString() == Tag) {
 					emit (
-						doc,
-						doc["conversationId"]);
+						doc["lastMessageTime"],
+						doc
+					);
 				}
-					
+
 			}, "1");
-				
-			// Set up a query for a view that indexes blog posts, to get the latest:
-			var query = Database.GetView("convos").CreateQuery();
+
+			// Set up a query for a view that indexes conversations, to get every unique conversation:
+			var query = Database.GetView("conversations").CreateQuery();
 			query.Descending = true;
-			query.Limit = 20;
 			query.Completed += (sender, e) => 
 				Log.Verbose(Tag, e.ErrorInfo.ToString() ?? e.Rows.ToString());
 			LiveQuery = query.ToLiveQuery ();
@@ -101,22 +101,24 @@ namespace messenger
 
 				var document = this[position];
 
+				var contact = Contact.GetContactByPhone ((string)document.GetProperty ("conversationId"), (Activity) Context);
+
 				var txtContactName = view.FindViewById<TextView>(Resource.Id.txtContactName);
 				var txtLastMessage = view.FindViewById<TextView>(Resource.Id.txtLastMessage);
 				var txtLastMessageTime = view.FindViewById<TextView>(Resource.Id.txtLastMessageTime);
 
-				txtContactName.Text = (string)document.GetProperty ("conversationId");
+				txtContactName.Text = contact.DisplayName;
 
 				if (document.GetProperty ("lastMessage") != null) {
 					txtLastMessage.Text = (string)document.GetProperty ("lastMessage");
 				}
-					
+
 				if (document.GetProperty ("lastMessageTime") != null) {
 					txtLastMessageTime.Text = DateTime.ParseExact (
 						(string)document.GetProperty ("lastMessageTime"), "yyyyMMddHHmmssffff", null
 					).TimeAgo ();
 				}
-			
+					
 				view.SetTag (Resource.String.NormalizedPhone, (string)document.GetProperty ("conversationId"));
 
 				return view;
@@ -125,5 +127,4 @@ namespace messenger
 		}
 	}
 }
-
 

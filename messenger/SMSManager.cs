@@ -28,13 +28,16 @@ namespace messenger
 					if (doc["type"].ToString() == DocType && 
 						doc["conversationId"].ToString() == normalizedPhone) {
 						emit (
-							doc,
-							doc["conversationId"]);
+							// Order by conversation, then timestamp
+							doc["time"],
+							doc
+							);
 					}
 
-				}, "6");
+				}, "7");
 			}
 			var query = view.CreateQuery();
+			query.Descending = true;
 			return query;
 		}
 	}
