@@ -1188,8 +1188,8 @@ namespace messenger
 			// aapt resource value: 0x7f090041
 			public const int ContactName = 2131296321;
 			
-			// aapt resource value: 0x7f09004a
-			public const int ContactsListView = 2131296330;
+			// aapt resource value: 0x7f09004b
+			public const int ContactsListView = 2131296331;
 			
 			// aapt resource value: 0x7f090040
 			public const int LastMessage = 2131296320;
@@ -1391,6 +1391,9 @@ namespace messenger
 			
 			// aapt resource value: 0x7f090027
 			public const int title = 2131296295;
+			
+			// aapt resource value: 0x7f09004a
+			public const int txtConversationList = 2131296330;
 			
 			// aapt resource value: 0x7f090045
 			public const int txtMessageBox = 2131296325;

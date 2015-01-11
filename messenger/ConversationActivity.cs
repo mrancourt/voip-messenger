@@ -13,7 +13,6 @@ using Android.Widget;
 using Couchbase.Lite;
 using Android.Util;
 using Android.Views.InputMethods;
-using Android.Views;
 using Utilities;
 using Newtonsoft.Json;
 
@@ -23,7 +22,7 @@ namespace messenger
 	public class ConversationActivity : Activity
 	{
 
-		static readonly string Tag = "conversations";
+		static readonly string Tag = "conversation";
 
 		Query Query { get; set; }
 		LiveQuery LiveQuery { get; set; }
@@ -47,9 +46,13 @@ namespace messenger
 			sms.Target =  contact.NormalizedNumber.ToDigitsOnly ();
 
 			// Get database instance
-			Database = Manager.SharedInstance.GetDatabase(Tag.ToLower() + "_" + sms.Target);
+			Database = Manager.SharedInstance.GetDatabase(Tag.ToLower());
+
+			// Create conversation document if not exist
+			initConversation (sms);
 
 			// Get previous messages
+			// TODO : Filer messages to get only those from current conversation
 			Query = Message.GetQuery(Database);
 			Query.Completed += (sender, e) => 
 				Log.Verbose("ConversationActivity", e.ErrorInfo.ToString() ?? e.Rows.ToString());
@@ -114,6 +117,26 @@ namespace messenger
 			base.OnResume(); // Always call the superclass first.
 
 			UpdateSync();
+		}
+
+		// Create document for conversation if not exists
+		private void initConversation (SMS sms) {
+
+			// Try to get document 
+			var doc = Database.GetExistingDocument (Tag.ToString() + "_" + sms.Target);
+
+			// Document does not exists, let's create a new one
+			if (doc == null) {
+				var properties = new Dictionary<string, object>
+				{
+					{ "conversationId", Tag.ToString() + sms.Target },
+					{ "type", Tag.ToString() },
+					{ "lastessage", null },
+					{ "lastMessageTime", null }
+				};
+				var document = Database.GetDocument(Tag.ToString() + "_" + sms.Target);
+				var rev = document.PutProperties(properties);
+			}
 		}
 
 		private void UpdateSync()
@@ -182,17 +205,16 @@ namespace messenger
 
 		private void SendSms(SMS sms)
 		{
-			//var doc = Database.GetDocument(Tag.ToString () + "_" + sms.Target);
 			var doc = Database.CreateDocument();
 			var props = new Dictionary<string, object>
 			{
-				{ "time", sms.Time},
-				{ "type", sms.Type},
-				{ "text", sms.Text}
+				{ "conversationId", Tag.ToString () + "_" + sms.Target },
+				{ "type", typeof(SMS).Name.ToLower() },
+				{ "time", sms.Time },
+				{ "text", sms.Text }
 			};
 
 			doc.PutProperties(props);
-					
 		}
 			
 		public class ListLiveQueryAdapter : ConversationListViewAdapter 
@@ -216,9 +238,7 @@ namespace messenger
 				text.Text = (string)document.GetProperty("text") + 
 					System.Environment.NewLine + System.Environment.NewLine +
 					DateTime.ParseExact((string)document.GetProperty("time"), "yyyyMMddHHmmssffff", null).TimeAgo();
-
-
-
+					
 				return view;
 
 			}

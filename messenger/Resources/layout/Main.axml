@@ -31,5 +31,10 @@
                 android:layout_gravity="center"
                 android:duplicateParentState="true" />
         </messenger.FloatingActionButton>
+        <TextView
+            android:text="Conversation List"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/txtConversationList" />
     </FrameLayout>
 </LinearLayout>

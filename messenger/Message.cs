@@ -11,7 +11,7 @@ namespace messenger
 	public class Message
 	{
 		// TODO : A verifer/Changer
-		private const string DocType = "list";
+		private readonly static string DocType = typeof(SMS).Name.ToLower();
 		private const string ViewName = "lists";
 
 		public Message ()
