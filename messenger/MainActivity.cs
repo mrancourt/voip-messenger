@@ -2,8 +2,6 @@
 
 using Android.App;
 using Android.Content;
-//using Android.Runtime;
-//using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Couchbase.Lite;
@@ -14,6 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Android.Views;
 using Utilities;
+using Gcm.Client;
 
 namespace messenger
 {
@@ -29,6 +28,9 @@ namespace messenger
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
+
+			// Register the device for Push Notifications
+			GcmBroadcastRegister.Register (this);
 
 			SetContentView (Resource.Layout.Main);
 
@@ -101,7 +103,7 @@ namespace messenger
 
 				var document = this[position];
 
-				var contact = Contact.GetContactByPhone ((string)document.GetProperty ("conversationId"), (Activity) Context);
+				var contact = Contact.GetContactByPhone ((string)document.GetProperty ("conversationId"), Context);
 
 				var txtContactName = view.FindViewById<TextView>(Resource.Id.txtContactName);
 				var txtLastMessage = view.FindViewById<TextView>(Resource.Id.txtLastMessage);

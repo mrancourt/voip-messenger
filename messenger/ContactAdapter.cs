@@ -11,22 +11,13 @@ using Android.Graphics.Drawables;
 using Android.Animation;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Android.App;
-using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Provider;
-using Android.Database;
-
 
 // Refactoriser permettre de passer des parametres a la fonction fillcontacts. Ex pour recuperer un seul contact.
 using Android.Net;
-using System;
 
 namespace messenger
 {
@@ -44,7 +35,6 @@ namespace messenger
 
 		void FillContacts ()
 		{
-			//var uri = ContactsContract.Contacts.ContentUri;
 			var uri = ContactsContract.CommonDataKinds.Phone.ContentUri;
 
 			string[] projection = {
@@ -58,9 +48,8 @@ namespace messenger
 			// Build query statement
 			string selection = ContactsContract.Contacts.InterfaceConsts.HasPhoneNumber + "= ?";
 			string[] selectionArgs = { "1" };
-			//string order = ContactsContract.Contacts.InterfaceConsts.Starred + " DESC";
-			string order = ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + " DESC";
-
+			string order = ContactsContract.Contacts.InterfaceConsts.Starred + " DESC";
+			order += ", " + ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId;
 
 			// Load query results
 			var loader = new CursorLoader (_activity, uri, projection, selection, selectionArgs, order);
@@ -79,7 +68,6 @@ namespace messenger
 						NormalizedNumber = cursor.GetString(cursor.GetColumnIndex(projection[4]))
 
 					});
-
 				} while (cursor.MoveToNext ());
 			}
 		}
@@ -154,4 +142,3 @@ namespace messenger
 		}
 	}
 }
-

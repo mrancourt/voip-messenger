@@ -31,7 +31,6 @@ namespace messenger
 			contentListView.Adapter = contactAdapter;
 
 			contentListView.ItemClick += (sender, e) => {
-			
 				// Get selected contact infos
 				var contact = (Contact) contentListView.GetItemAtPosition(e.Position);
 
@@ -56,7 +55,5 @@ namespace messenger
 				return base.OnOptionsItemSelected(item);
 			}
 		}
-
 	}
 }
-

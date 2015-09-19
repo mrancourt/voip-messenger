@@ -15,6 +15,7 @@ using Android.Util;
 using Android.Views.InputMethods;
 using Utilities;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace messenger
 {
@@ -38,21 +39,29 @@ namespace messenger
 
 			// Load contact infos
 			string normalizedPhone = Intent.GetStringExtra("normalizedPhone");
-			Contact contact = Contact.GetContactByPhone(normalizedPhone, this);
+			string message = Intent.GetStringExtra("message");
 
-			// Instantiante Sms
-			var sms = new SMS(); 
-			sms.Target =  contact.NormalizedNumber;
+			Contact contact = Contact.GetContactByPhone(normalizedPhone, this);
 
 			// Get database instance
 			Database = Manager.SharedInstance.GetDatabase(Tag.ToLower());
 
+			var smsManager = new SMSManager (Database);
+			var sms = new SMS(normalizedPhone, message); 
+
 			// Create conversation document if not exist
 			initConversation (sms);
 
+			// If message comes from notification, add it to db
+			string source = (string) Intent.GetStringExtra ("source");
+			if (source == "server") {
+				sms.Source = source;
+				smsManager.AddMessage (sms);
+			}
+
 			// Get previous messages
 			// TODO : Filer messages to get only those from current conversation
-			Query = SMSManager.GetQuery(Database, sms.Target);
+			Query = smsManager.GetQuery(sms.Target);
 			Query.Completed += (sender, e) => 
 				Log.Verbose(Tag, e.ErrorInfo.ToString() ?? e.Rows.ToString());
 			LiveQuery = Query.ToLiveQuery();
@@ -70,11 +79,13 @@ namespace messenger
 			ListView listView = FindViewById<ListView>(Resource.Id.listViewMessages);
 
 			// Set ActionBar to contact name
-			this.Title = contact.DisplayName;
+			this.Title = contact.DisplayName + " " + contact.NormalizedNumber;
 
 			sendMessageButton.Click += (sender, e) => {
 				sms.Message = newMessageText.Text;
-				SendSms(sms);
+				sms.Source = "app";
+				Background(sms);
+
 				newMessageText.Text = "";
 			};
 
@@ -87,6 +98,32 @@ namespace messenger
 				
 			// Bind listview adapyer to liveQuery
 			listView.Adapter = new ListLiveQueryAdapter(this, LiveQuery);
+		}
+
+		void Background(SMS sms) {
+
+			// Starting a new thread to do the workload of sending the sms 
+			new Thread(new ThreadStart(() =>
+				{
+
+					// Send sms
+					VoipMsResponse response = SMSManager.SendSMS(sms);
+
+					// An error ocured while sending sms... Show error message
+					/*if (response.error != null) {
+						RunOnUiThread ( () => {
+							//response.error txtMessageStatus.Text;
+						});
+					}*/
+
+					// Save message to database, add it to the listview
+					RunOnUiThread ( () => {
+						var smsManager = new SMSManager (Database);
+						smsManager.AddMessage(sms);
+					});
+						
+				}
+			)).Start();
 		}
 
 		/**
@@ -125,7 +162,7 @@ namespace messenger
 					{ "conversationId", sms.Target },
 					{ "type", Tag.ToString() },
 					{ "lastMessage", null },
-					{ "lastMessageTime", null }
+					{ "lastMessageTime", null },
 				};
 				var document = Database.GetDocument(sms.Target);
 				var rev = document.PutProperties(properties);
@@ -195,33 +232,6 @@ namespace messenger
 				SetProgressBarIndeterminateVisibility(false);
 			}
 		}
-
-		void SendSms(SMS sms)
-		{
-			// Insert message
-			var docMessage = Database.CreateDocument();
-			var props = new Dictionary<string, object>
-			{
-				{ "conversationId", sms.Target },
-				{ "type", typeof(SMS).Name.ToLower() },
-				{ "time", sms.Time },
-				{ "text", sms.Message }
-			};
-			docMessage.PutProperties(props);
-
-			// Update conversation 
-			// TODO : check if message update is OK
-			var docConversation = Database.GetDocument(sms.Target);
-			docConversation.Update((UnsavedRevision newRevision) => 
-				{
-					var properties = newRevision.Properties;
-					properties["conversationId"] = sms.Target;
-					properties["type"] = Tag.ToString();
-					properties["lastMessage"] =  sms.Message;
-					properties["lastMessageTime"] = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-					return true;
-				});
-		}
 			
 		public class ListLiveQueryAdapter : ConversationListViewAdapter 
 		{
@@ -231,14 +241,25 @@ namespace messenger
 			public override Android.Views.View GetView(int position,
 				Android.Views.View convertView, ViewGroup parent)
 			{
+				var document = this [position];
+
 				var view = convertView;
 				if (view == null)
 				{
-					view = ((Activity)Context).LayoutInflater.Inflate(
-						Resource.Layout.ConversationListItem, null);
+
+					int messageLayout;
+
+					Console.WriteLine ((string)document.GetProperty ("source"));
+
+					if ("app" == (string)document.GetProperty ("source")) {
+						messageLayout = Resource.Layout.ConversationListItemOut;
+					} else {
+						messageLayout = Resource.Layout.ConversationListItemIn;
+					}
+
+					view = ((Activity)Context).LayoutInflater.Inflate(messageLayout, null);
 				}
 
-				var document = this[position];
 
 				var text = view.FindViewById<TextView>(Resource.Id.text);
 				text.Text = (string)document.GetProperty("text") + 
@@ -251,4 +272,3 @@ namespace messenger
 		}
 	}
 }
-

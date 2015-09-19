@@ -16,27 +16,27 @@ namespace messenger
 		public string Number { get; set; }
 		public string NormalizedNumber { get; set; }
 
-		public static Contact GetContactById(long Id, Activity activity) {
+		public static Contact GetContactById(long Id, Context context) {
 			// Build query statement
 			const string selection = ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + "= ?";
 			string[] selectionArgs = { Id.ToString() };
 
-			Contact contact = GetContact (activity, selection, selectionArgs);
+			Contact contact = GetContact (context, selection, selectionArgs);
 
 			return contact ;
 		}
 
-		public static Contact GetContactByPhone(string normalizedPhone, Activity activity) {
+		public static Contact GetContactByPhone(string normalizedPhone, Context context) {
 			// Build query statement
 			const string selection = ContactsContract.CommonDataKinds.Phone.NormalizedNumber + "= ?";
 			string[] selectionArgs = { normalizedPhone.ToString() };
 
-			Contact contact = Contact.GetContact (activity, selection, selectionArgs);
+			Contact contact = Contact.GetContact (context, selection, selectionArgs);
 
 			return contact ;
 		}
 
-		protected static Contact GetContact (Activity activity, string selection = null, string[] selectionArgs = null) 
+		protected static Contact GetContact (Context context, string selection = null, string[] selectionArgs = null) 
 		{
 			var contact = new Contact() ;
 
@@ -51,7 +51,7 @@ namespace messenger
 			};
 				
 			// Load query results
-			var loader = new CursorLoader (activity, uri, projection, selection, selectionArgs, null);
+			var loader = new CursorLoader (context, uri, projection, selection, selectionArgs, null);
 			var cursor = (ICursor)loader.LoadInBackground ();
 
 			if (cursor.MoveToFirst ()) {
